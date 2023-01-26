@@ -3,8 +3,6 @@ const textbox = document.getElementById("textbox")
 const errorTextbox = document.getElementById("errorTextbox")
 
 button.addEventListener('click', function wordChange(){
-    textbox.style.color = "rgba(0, 0, 0, 0)"
-    textbox.contentEditable = false
 
     function wordReplacing(){
         if(!textbox.textContent){
@@ -15,7 +13,7 @@ button.addEventListener('click', function wordChange(){
             setTimeout(() => {
                 textbox.contentEditable = true
                 errorTextbox.textContent = null
-            }, 5000)
+            }, 3000)
             return
         }
 
@@ -38,38 +36,68 @@ button.addEventListener('click', function wordChange(){
             }
             return CheckingF
         }
-    
-        //space = '&nbsp;' AND '\u0020' //- The most damn important thing, at least at 00:41 1/26/2023
         
         let CheckingF = []
-    
+
         let AditiveConj = [
-            "e",
-            "também",
             "como também",
             "além de que",
-            "mais"
-         ]
+            "mais",
+            "também",
+            "e"
+        ]
 
         createChecking(AditiveConj)
 
-        if(textbox.innerHTML){
-            for(e in AditiveConj){
-                let pattern = new RegExp(`(&nbsp;|\u0020)${AditiveConj[e]}(&nbsp;|\u0020)`)
-                 while(textbox.innerHTML.match(pattern)){
-                     let newWord = String(pickRandom(AditiveConj))
-                    textbox.innerHTML = textbox.innerHTML.replace(pattern, `&nbsp;${newWord.toUpperCase()}&nbsp;`)
+        const Conjunctions = [
+            AditiveConj,
+            
+        ]
+
+        if(textbox.textContent){
+            var usableWord = String();
+            var pattern = RegExp();
+            for(let iE in Conjunctions){
+                for(let jE in Conjunctions[iE]){
+                    if(textbox.innerHTML.match(Conjunctions[iE][jE]) && Conjunctions[iE][jE].match(/\s/)){
+                        pattern = new RegExp(`(&nbsp;|\u0020)${Conjunctions[iE][jE].replace(/\s/g, '\u005F')}(&nbsp;|\u0020)`)
+                        textbox.innerHTML = textbox.innerHTML.replace(Conjunctions[iE][jE], Conjunctions[iE][jE].replace(/\s/g, '\u005F'));
+                        if(textbox.innerHTML.match(pattern)){
+                            var spaceBef = textbox.innerHTML.match(pattern)[1]; var spaceAft = textbox.innerHTML.match(pattern)[2]
+                            textbox.innerHTML = textbox.innerHTML.replace(pattern, `${spaceBef}${pickRandom(Conjunctions[iE])}${spaceAft}`)
+                        }
+                    }
+                    if(textbox.innerHTML.match(Conjunctions[iE][jE]) && !Conjunctions[iE][jE].match(/\s/)){
+                        pattern = new RegExp(`(&nbsp;|\u0020)${Conjunctions[iE][jE]}(&nbsp;|\u0020)`)
+                        if(textbox.innerHTML.match(pattern)){
+                            textbox.innerHTML = textbox.innerHTML.replace(pattern, `&nbsp;${pickRandom(Conjunctions[iE])}&nbsp;`)
+                        }
+                    }
                 }
-                Object.defineProperty(CheckingF[e], AditiveConj[e], {value: true, writable: true})   
             }
             return
         }
     }
-
-    setTimeout(()=>{
-        textbox.style.color = "rgba(0, 0, 0, 1)"
-        wordReplacing();
-        textbox.contentEditable = true
-    }, 1500)
+    wordReplacing()
     return
 })
+
+//space = '&nbsp;' AND '\u0020' //- The most damn important thing, at least at 16:32 1/26/2023
+//An note that i would like to share: F*** the guy who said that whitespace is '&nbsp;' AND '\u0020'
+
+/*
+
+if(textbox.innerHTML){
+            for(e in AditiveConj){
+                let pattern = new RegExp(`(&nbsp;|\u0020)${AditiveConj[e]}(&nbsp;|\u0020)`)
+                while(textbox.innerHTML.match(pattern)){
+                    let newWord = String(pickRandom(AditiveConj))
+                    textbox.innerHTML = textbox.innerHTML.replace(pattern, `&nbsp;${newWord.toUpperCase()}&nbsp;`)
+                }
+                Object.defineProperty(CheckingF[e], AditiveConj[e], {value: true, writable: true})   
+            }
+            return 
+        }
+    
+        //textbox.innerHTML = textbox.innerHTML.replace(pattern, `&nbsp;${String(pickRandom(Conjunctions[highE])).toUpperCase()}&nbsp;`)
+*/

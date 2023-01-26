@@ -29,7 +29,7 @@ for(let j = 0; j < arguments.length; j++){
                 }
             }
             return console.log(Checking[0].slice(Checking[0].indexOf(false), Checking[0].length))
-            */
+
 
 
 
@@ -58,5 +58,18 @@ function eAditive() {
     85.5%{color: #0000FF};
     99.75%{color: #8B00FF};
     100%{color: #000000}
-
+    
+    if(textbox.innerHTML){
+            for(e in AditiveConj){
+                let pattern = new RegExp(`(&nbsp;|\u0020)${AditiveConj[e]}(&nbsp;|\u0020)`)
+                while(textbox.innerHTML.match(pattern)){
+                    let newWord = String(pickRandom(AditiveConj))
+                    textbox.innerHTML = textbox.innerHTML.replace(pattern, `&nbsp;${newWord.toUpperCase()}&nbsp;`)
+                }
+                Object.defineProperty(CheckingF[e], AditiveConj[e], {value: true, writable: true})   
+            }
+            return 
+        }
 */
+
+//This crap refuse to stay as PlainText
