@@ -1,0 +1,62 @@
+/*"Legacy Code" so you can see my suffering in a step-by-step tutorial:
+
+
+
+if(textbox.innerHTML.match(/&nbsp;\u0065&nbsp/) !== null){
+    matcher = textbox.innerHTML.match(/&nbsp;\u0065&nbsp;/)
+    textbox.innerHTML = textbox.innerHTML.replace(/&nbsp;\u0065&nbsp;/, `&nbsp;${pickRandom(AditiveConj)}&nbsp;`)
+}
+
+(&nbsp;|\u0020)\u0065(&nbsp;|\u0020)
+
+
+
+Checking.push(Object.create({i: false}))
+
+
+
+for(let j = 0; j < arguments.length; j++){
+                for(let i = 0; i < arguments[j].length; i++){
+                    Object.defineProperty(Checking, arguments[j][i], {value: false})
+                }
+            }
+
+
+
+for(let j = 0; j < arguments.length; j++){
+                for(let i = 0; i < arguments[j].length; i++){
+                    Checking.push(`${arguments[j][i]}: ${false}`)
+                }
+            }
+            return console.log(Checking[0].slice(Checking[0].indexOf(false), Checking[0].length))
+            */
+
+
+
+Object.defineProperty(Checking, arguments[j][i], {value: false, configurable: false})
+
+
+
+function eAditive() {
+            while(textbox.innerHTML.match(/(&nbsp;|\u0020)\u0065(&nbsp;|\u0020)/) !== null){
+                let matcher = textbox.innerHTML.match(/(&nbsp;|\u0020)\u0065(&nbsp;|\u0020)/)[0]
+                let spaceBef = matcher.slice(0, (matcher.indexOf('\u0065')))
+                let spaceAft = matcher.slice(matcher.indexOf('\u0065') +1, matcher.length)
+                textbox.innerHTML = textbox.innerHTML.replace(matcher, `${spaceBef}${pickRandom(AditiveConj)}${spaceAft}`)
+            }
+            CheckingF[0].e = true
+            console.log(CheckingF);
+            return 
+        }
+        eAditive()
+
+    14.25%{color: #FF0000};
+    28.5%{color: #FF7F00};
+    42.72%{color: #FFFF00};
+    57%{color: #00FF00};
+    71.25%{color: #00FFFF};
+    85.5%{color: #0000FF};
+    99.75%{color: #8B00FF};
+    100%{color: #000000}
+
+*/
