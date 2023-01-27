@@ -3,6 +3,7 @@ const textbox = document.getElementById("textbox")
 const errorTextbox = document.getElementById("errorTextbox")
 
 button.addEventListener('click', function wordChange(){
+    console.time('time')
 
     function wordReplacing(){
         if(!textbox.textContent){
@@ -17,7 +18,7 @@ button.addEventListener('click', function wordChange(){
             return
         }
 
-   
+    try{
         function pickRandom(arg){
             if(Array.isArray(arg)){
                 return arg[Math.floor(Math.random() * arg.length)]
@@ -27,17 +28,8 @@ button.addEventListener('click', function wordChange(){
             }
         }
 
-        function createChecking(){
-            for(let j = 0; j < arguments.length; j++){
-                for(let i = 0; i < arguments[j].length; i++){
-                    let CheckingP = {}
-                   CheckingF.push(Object.defineProperty(CheckingP, arguments[j][i], {value: false, writable: true}))
-                }
-            }
-            return CheckingF
-        }
         
-        let CheckingF = []
+        let CheckingF = {}
 
         let AditiveConj = [
             "como também",
@@ -47,37 +39,51 @@ button.addEventListener('click', function wordChange(){
             "e"
         ]
 
-        createChecking(AditiveConj)
-
         const Conjunctions = [
             AditiveConj,
             
         ]
 
         if(textbox.textContent){
-            var usableWord = String();
             var pattern = RegExp();
+            var patchedConjunctions = Array(String());
+            var cont = Number(0);
+
             for(let iE in Conjunctions){
-                for(let jE in Conjunctions[iE]){
-                    if(textbox.innerHTML.match(Conjunctions[iE][jE]) && Conjunctions[iE][jE].match(/\s/)){
-                        pattern = new RegExp(`(&nbsp;|\u0020)${Conjunctions[iE][jE].replace(/\s/g, '\u005F')}(&nbsp;|\u0020)`)
-                        textbox.innerHTML = textbox.innerHTML.replace(Conjunctions[iE][jE], Conjunctions[iE][jE].replace(/\s/g, '\u005F'));
-                        if(textbox.innerHTML.match(pattern)){
-                            var spaceBef = textbox.innerHTML.match(pattern)[1]; var spaceAft = textbox.innerHTML.match(pattern)[2]
-                            textbox.innerHTML = textbox.innerHTML.replace(pattern, `${spaceBef}${pickRandom(Conjunctions[iE])}${spaceAft}`)
+                for(let jE in Conjunctions[iE]){ 
+                    if(Conjunctions[iE][jE].match(/\s+/)){
+                        patchedConjunctions[cont] = (Conjunctions[iE][jE].replace(/\s/g, '\u005F'))
+                        cont = cont + 1
+                        if(textbox.innerHTML.match(Conjunctions[iE][jE])){
+                            textbox.innerHTML = textbox.innerHTML.replace(Conjunctions[iE][jE], Conjunctions[iE][jE].replace(/\s/g, '\u005F'))
                         }
                     }
-                    if(textbox.innerHTML.match(Conjunctions[iE][jE]) && !Conjunctions[iE][jE].match(/\s/)){
-                        pattern = new RegExp(`(&nbsp;|\u0020)${Conjunctions[iE][jE]}(&nbsp;|\u0020)`)
-                        if(textbox.innerHTML.match(pattern)){
-                            textbox.innerHTML = textbox.innerHTML.replace(pattern, `&nbsp;${pickRandom(Conjunctions[iE])}&nbsp;`)
-                        }
+                    else{
+                        patchedConjunctions[cont] = (Conjunctions[iE][jE])
+                        cont = cont + 1
                     }
+                }
+            }
+            for(let Element of patchedConjunctions){
+                pattern = RegExp(`(&nbsp;|\u0020)${Element}(&nbsp;|\u0020)`)
+                if(textbox.innerHTML.match(pattern)){
+                    let spaceBefore = textbox.innerHTML.match(pattern)[1]
+                    let spaceAfter = textbox.innerHTML.match(pattern)[2]
+                    textbox.innerHTML = textbox.innerHTML.replace(pattern, `${spaceBefore}${pickRandom(patchedConjunctions)}${spaceAfter}`)
+                    Object.defineProperty()
                 }
             }
             return
         }
-    }
+    } catch (error){
+        textbox.contentEditable = false
+        errorTextbox.textContent = '\u274C\u2009'.concat(error)
+        setTimeout(()=>{
+            errorTextbox.textContent = null
+            textbox.contentEditable = true
+        }, 2000)
+    } 
+}
     wordReplacing()
     return
 })
@@ -100,4 +106,20 @@ if(textbox.innerHTML){
         }
     
         //textbox.innerHTML = textbox.innerHTML.replace(pattern, `&nbsp;${String(pickRandom(Conjunctions[highE])).toUpperCase()}&nbsp;`)
-*/
+
+        if(textbox.innerHTML.match(Conjunctions[iE][jE]) && Conjunctions[iE][jE].match(/\s/)){
+                        pattern = new RegExp(`(&nbsp;|\u0020)${Conjunctions[iE][jE].replace(/\s/g, '\u005F')}(&nbsp;|\u0020)`)
+                        textbox.innerHTML = textbox.innerHTML.replace(Conjunctions[iE][jE], Conjunctions[iE][jE].replace(/\s/g, '\u005F'));
+                        if(textbox.innerHTML.match(pattern)){
+                            var spaceBef = textbox.innerHTML.match(pattern)[1]; var spaceAft = textbox.innerHTML.match(pattern)[2]
+                            textbox.innerHTML = textbox.innerHTML.replace(pattern, `${spaceBef}${pickRandom(Conjunctions[iE])}${spaceAft}`)
+                        }
+                    }
+                    if(textbox.innerHTML.match(Conjunctions[iE][jE]) && !Conjunctions[iE][jE].match(/\s/)){
+                        pattern = new RegExp(`(&nbsp;|\u0020)${Conjunctions[iE][jE]}(&nbsp;|\u0020)`)
+                        if(textbox.innerHTML.match(pattern)){
+                            textbox.innerHTML = textbox.innerHTML.replace(pattern, `&nbsp;${pickRandom(Conjunctions[iE])}&nbsp;`)
+                        }
+                    }
+        
+        */
