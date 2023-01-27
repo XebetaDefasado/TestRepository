@@ -33,15 +33,35 @@ body{
     border: 1px solid #506070;
     padding: 5px;
     color: #f2f2f2;
-    background: lightgray;
+    background: linear-gradient(gray, lightgray);
     font-weight: bold;
     text-shadow: 0px 0px 5px #ff8493;
     word-break: normal;
     overflow-y: scroll;
 }
+#optionsResults{
+    width: calc(100vw - calc(50vw - 2px) - 200px);
+    max-width: calc(100vw - calc(50vw - 2px) - 200px);
+    height: calc(100px - 2px);
+    max-height: calc(100px - 2px);
+    overflow-y: scroll;
+    border: 1px solid black;
+    display: block;
+    background: linear-gradient(45deg, lightblue, lightgreen);
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#optionsList{
+    display: flex;
+    justify-content: space-evenly;
+    width: calc(100vw - calc(50vw - 2px) - 200px);
+    max-width: calc(100vw - calc(50vw - 2px) - 200px);
+    height: fit-content;
+    max-height: fit-content
+}
 #button{
-    width: calc(200px - 2px);
-    height: calc(200px - 2px);
+    width: calc(200px / 4 - 2px);
+    height: calc(200px / 4 - 2px);
     border-radius: 50%;
     background-color: white;
     border: 1px solid darkgoldenrod;
@@ -55,4 +75,9 @@ body{
 ::-webkit-scrollbar-thumb{
     background-color: black;
     border-radius: 50%, 50%;
+}
+.no-marker{
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }

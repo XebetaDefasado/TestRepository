@@ -1,91 +1,100 @@
 const button = document.getElementById("button")
 const textbox = document.getElementById("textbox")
 const errorTextbox = document.getElementById("errorTextbox")
+const optionsResults = document.getElementById("optionsResults")
+const showChangedWords = document.getElementById("showChangedWords"); 
 
 button.addEventListener('click', function wordChange(){
-    console.time('time')
-
-    function wordReplacing(){
-        if(!textbox.textContent){
-            var newError = Error()
-            newError.name = '\u274C\u2009ValueError'
-            newError.message = `Please, input a value before. You can't change what doesn't exist, am I right?`
-            errorTextbox.innerHTML = `${newError.name}:<br>${newError.message}`
-            setTimeout(() => {
-                textbox.contentEditable = true
-                errorTextbox.textContent = null
-            }, 3000)
-            return
-        }
-
     try{
-        function pickRandom(arg){
+    
+        function wordReplacing(){
+            if(!textbox.textContent){
+                let newError = Error()
+                newError.name = 'ValueError'
+                newError.message = `Please, input a value before. You can't change what doesn't exist, am I right?`
+                throw newError
+            }
+
+    
+            function pickRandom(arg){
             if(Array.isArray(arg)){
                 return arg[Math.floor(Math.random() * arg.length)]
             }
             if(typeof arg === "number"){
                 return Math.floor(Math.random() * arg)
             }
-        }
+            }
 
         
-        let CheckingF = {}
+            let CheckingF = []
 
-        let AditiveConj = [
-            "como também",
-            "além de que",
-            "mais",
-            "também",
-            "e"
-        ]
+            let AditiveConj = [
+                "como também",
+                "além de que",
+                "mais",
+                "também",
+                "e"
+            ]
 
-        const Conjunctions = [
-            AditiveConj,
+            const Conjunctions = [
+                AditiveConj,
             
-        ]
+            ]
 
-        if(textbox.textContent){
-            var pattern = RegExp();
-            var patchedConjunctions = Array(String());
-            var cont = Number(0);
+            if(textbox.textContent){
+                var pattern = RegExp();
+                var patchedConjunctions = Array(String());
+                var cont = Number(0);
 
-            for(let iE in Conjunctions){
-                for(let jE in Conjunctions[iE]){ 
-                    if(Conjunctions[iE][jE].match(/\s+/)){
-                        patchedConjunctions[cont] = (Conjunctions[iE][jE].replace(/\s/g, '\u005F'))
-                        cont = cont + 1
-                        if(textbox.innerHTML.match(Conjunctions[iE][jE])){
-                            textbox.innerHTML = textbox.innerHTML.replace(Conjunctions[iE][jE], Conjunctions[iE][jE].replace(/\s/g, '\u005F'))
+                for(let iE in Conjunctions){
+                    for(let jE in Conjunctions[iE]){ 
+                        if(Conjunctions[iE][jE].match(/\s+/)){
+                            patchedConjunctions[cont] = (Conjunctions[iE][jE].replace(/\s/g, '\u005F'))
+                            cont = cont + 1
+                            if(textbox.innerHTML.match(Conjunctions[iE][jE])){
+                                textbox.innerHTML = textbox.innerHTML.replace(Conjunctions[iE][jE], Conjunctions[iE][jE].replace(/\s/g, '\u005F'))
+                            }
+                        }
+                        else{
+                            patchedConjunctions[cont] = (Conjunctions[iE][jE])
+                            cont = cont + 1
                         }
                     }
-                    else{
-                        patchedConjunctions[cont] = (Conjunctions[iE][jE])
-                        cont = cont + 1
+                }
+                for(let Element of patchedConjunctions){
+                    let CheckingP = {}
+                    Object.defineProperty(CheckingP, Element, {value: false, writable: true})
+                    pattern = RegExp(`(&nbsp;|\u0020)${Element}(&nbsp;|\u0020)`)
+                    if(textbox.innerHTML.match(pattern)){
+                        let spaceBefore = textbox.innerHTML.match(pattern)[1]
+                        let spaceAfter = textbox.innerHTML.match(pattern)[2]
+                        textbox.innerHTML = textbox.innerHTML.replace(pattern, `${spaceBefore}${pickRandom(patchedConjunctions)}${spaceAfter}`)
+                        Object.defineProperty(CheckingP, Element, {value: true, writable: true})
+                    }
+                    CheckingF.push(CheckingP)
+                }
+                if(showChangedWords.checked){
+                    for(let e of CheckingF){
+                        optionsResults.innerHTML += `${Object.getOwnPropertyNames(e.valueOf())}:\u0020${e.valueOf()[Object.getOwnPropertyNames(e.valueOf())]} <br>`
+                        setTimeout(() => {
+                            optionsResults.innerHTML = null
+                        }, 5000);
                     }
                 }
+                return
             }
-            for(let Element of patchedConjunctions){
-                pattern = RegExp(`(&nbsp;|\u0020)${Element}(&nbsp;|\u0020)`)
-                if(textbox.innerHTML.match(pattern)){
-                    let spaceBefore = textbox.innerHTML.match(pattern)[1]
-                    let spaceAfter = textbox.innerHTML.match(pattern)[2]
-                    textbox.innerHTML = textbox.innerHTML.replace(pattern, `${spaceBefore}${pickRandom(patchedConjunctions)}${spaceAfter}`)
-                    Object.defineProperty()
-                }
-            }
-            return
         }
+        wordReplacing()
+        return
+
     } catch (error){
         textbox.contentEditable = false
-        errorTextbox.textContent = '\u274C\u2009'.concat(error)
+        errorTextbox.innerHTML = `\u274C\u2009${error.name}:<br>${error.message}` 
         setTimeout(()=>{
-            errorTextbox.textContent = null
+            errorTextbox.innerHTML = null
             textbox.contentEditable = true
         }, 2000)
-    } 
-}
-    wordReplacing()
-    return
+    }
 })
 
 //space = '&nbsp;' AND '\u0020' //- The most damn important thing, at least at 16:32 1/26/2023
