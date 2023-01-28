@@ -45,9 +45,8 @@
           <label for="formatWords" class="label">Format altered words</label>
           <div class="dropdown">
             This option let you format the altered words, replacing the
-            underlines for whitespaces. Hint: If you pretend to modify the text
-            various times, disable this option, as the underlines are NECESSARY
-            for the modification.
+            uppercases for lowercases. Please review the text for incorrect
+            lowercase punctuation.
           </div>
           <label class="customCheckmark">
             <input type="checkbox" id="formatWords" class="hideDefault" />
@@ -55,10 +54,14 @@
           </label>
         </li>
         <li class="no-marker">
-          <label for="future" class="label">Coming Soon</label>
-          <div class="dropdown">This does not exist yet...</div>
+          <label for="underlineRemoval" class="label">Remove underlines</label>
+          <div class="dropdown">
+            This option let you remove underlines from the text. But understand
+            that you will not be able to alter correctly without disabling this
+            option.
+          </div>
           <label class="customCheckmark">
-            <input type="checkbox" id="future" class="hideDefault" />
+            <input type="checkbox" id="underlineRemoval" class="hideDefault" />
             <span class="checkmark"></span>
           </label>
         </li>

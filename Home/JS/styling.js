@@ -1,6 +1,8 @@
 const labels = document.getElementsByClassName("label")
 const checkmark = document.getElementsByClassName('hideDefault')
 
+var futureText = String()
+
 for(let e of checkmark){
     if(e.checked){
         let labelsArr = []
@@ -39,11 +41,28 @@ for(let e of checkmark){
     })
 }
 
-/*e.addEventListener('change', () => {
-    for(let j of labels){
-        if(j.htmlFor === e.id){
-            j.classList.toggle('textFor')
-            
+underlineRemoval.addEventListener('click', () => {
+    if(underlineRemoval.checked){
+        textbox.textContent = textbox.textContent.replace(/\u005F/g, '\u0020')
+        return
+    }
+    textbox.innerHTML = textbox.innerHTML.replace(/\u0020/g, '\u005F')
+    return
+})
+formatWords.addEventListener('click', () => {
+    if(formatWords.checked){
+        futureText = ""
+        for(let letter of textbox.textContent){
+            let saver = textbox.textContent.match(letter)
+            futureText += saver[0]
+            if(letter.toUpperCase() === letter){
+                textbox.textContent = textbox.textContent.replace(letter, letter.toLowerCase())
+            }
         }
-    };
-})*/
+        return
+    }
+    if(!formatWords.checked){
+        textbox.textContent = futureText
+    }
+    return
+})

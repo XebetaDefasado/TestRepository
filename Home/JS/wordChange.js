@@ -4,6 +4,7 @@ const errorTextbox = document.getElementById("errorTextbox")
 const optionsResults = document.getElementById("optionsResults")
 const showChangedWords = document.getElementById("showChangedWords");
 const formatWords = document.getElementById("formatWords");
+const underlineRemoval = document.getElementById("underlineRemoval")
 
 button.addEventListener('click', function wordChange(){
     try{
@@ -45,12 +46,13 @@ button.addEventListener('click', function wordChange(){
 
             if(textbox.textContent){
                 var pattern = RegExp();
-                var patchedConjunctions = Array(String());
+                var patchedConjunctions = [];
                 var cont = Number(0);
+                let booleanContainer = []
 
                 for(let iE in Conjunctions){
                     for(let jE in Conjunctions[iE]){ 
-                        if(Conjunctions[iE][jE].match(/\s+/)){
+                        if(Conjunctions[iE][jE].match(/(\s+|&nbsp;+)/)){
                             patchedConjunctions[cont] = (Conjunctions[iE][jE].replace(/\s/g, '\u005F'))
                             cont = cont + 1
                             if(textbox.innerHTML.match(Conjunctions[iE][jE])){
@@ -71,10 +73,11 @@ button.addEventListener('click', function wordChange(){
                     if(textbox.innerHTML.match(pattern)){
                         let spaceBefore = textbox.innerHTML.match(pattern)[1]
                         let spaceAfter = textbox.innerHTML.match(pattern)[2]
-                        textbox.innerHTML = textbox.innerHTML.replace(pattern, `${spaceBefore}${pickRandom(patchedConjunctions)}${spaceAfter}`)
+                        textbox.innerHTML = textbox.innerHTML.replace(pattern, `${spaceBefore}${String(pickRandom(patchedConjunctions)).toUpperCase()}${spaceAfter}`)
                         Object.defineProperty(CheckingP, Element, {value: true, writable: true})
                     }
                     CheckingF.push(CheckingP)
+                    booleanContainer.push(CheckingP)
                 }
                 if(showChangedWords.checked){
                     for(let e of CheckingF){
@@ -87,10 +90,12 @@ button.addEventListener('click', function wordChange(){
                         }
                         optionsResults.innerHTML += `${Object.getOwnPropertyNames(e.valueOf())}:\u0020${e.valueOf()[Object.getOwnPropertyNames(e.valueOf())]} <br>`
                     }
-                }
-                if(formatWords.checked){
-                    if(textbox.innerHTML.match(/\u005F/) !== null){
-                        textbox.innerHTML = textbox.innerHTML.replace(/\u005F/g, '&nbsp;')
+                    if(booleanContainer){
+                        let lengthSaver = booleanContainer.length
+                        booleanContainer = booleanContainer.filter((el) => {return el[Object.getOwnPropertyNames(el)] === false})
+                        if(lengthSaver === booleanContainer.length){
+                            optionsResults.innerHTML = "Nothing changed at all."
+                        }
                     }
                 }
                 return
@@ -143,5 +148,16 @@ if(textbox.innerHTML){
                             textbox.innerHTML = textbox.innerHTML.replace(pattern, `&nbsp;${pickRandom(Conjunctions[iE])}&nbsp;`)
                         }
                     }
-        
+        if(textbox.textContent.match(/\w+|\u00C9/gi).toString().replace(/\u002C/g, '') !== null){
+            for(let f = 0;f = textbox.textContent.match(/\w+|\u00C9/gi).length; f++){
+                let initialWord = textbox.textContent.match(/\w+|\u00C9/gi)[f].toString().replace(/\u002C/g, '')
+                let finalWord = textbox.textContent.match(/\w+|\u00C9/gi)[f].toString().replace(/\u002C/g, '')
+                for(let e of finalWord){
+                    if(e.toUpperCase() === e){
+                        finalWord = finalWord.replace(e, e.toLowerCase())
+                    }
+                } 
+                textbox.textContent = textbox.textContent.replace(initialWord, finalWord)
+            }
+        }
         */
