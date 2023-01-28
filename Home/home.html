@@ -14,17 +14,53 @@
   <body>
     <div id="textbox" contenteditable="true" spellcheck="false"></div>
     <div id="err&Btn">
-      <div id="errorTextbox"></div>
-      <div id="optionsResults" contenteditable spellcheck="false"></div>
+      <div id="errorTextbox" class="customBar"></div>
+      <div
+        id="optionsResults"
+        contenteditable
+        spellcheck="false"
+        class="customBar"
+      ></div>
       <button id="button"></button>
       <ul id="optionsList">
         <li class="no-marker">
-          <label for="showChangedWords?">showChangedWords</label>
-          <input type="checkbox" id="showChangedWords" checked="true" />
+          <label for="showChangedWords" class="label">Show changed words</label>
+          <div class="dropdown">
+            This option let you see what words were changed during the text
+            alteration. In other words, if the word "mais" was altered to
+            another word, this will display: "mais: true" meaning that the word
+            "mais" was in fact altered.
+          </div>
+          <label class="customCheckmark">
+            <input
+              type="checkbox"
+              id="showChangedWords"
+              class="hideDefault"
+              checked
+            />
+            <span class="checkmark"></span>
+          </label>
         </li>
         <li class="no-marker">
-          <label for="future">Coming Soon</label>
-          <input type="checkbox" id="future" />
+          <label for="formatWords" class="label">Format altered words</label>
+          <div class="dropdown">
+            This option let you format the altered words, replacing the
+            underlines for whitespaces. Hint: If you pretend to modify the text
+            various times, disable this option, as the underlines are NECESSARY
+            for the modification.
+          </div>
+          <label class="customCheckmark">
+            <input type="checkbox" id="formatWords" class="hideDefault" />
+            <span class="checkmark"></span>
+          </label>
+        </li>
+        <li class="no-marker">
+          <label for="future" class="label">Coming Soon</label>
+          <div class="dropdown">This does not exist yet...</div>
+          <label class="customCheckmark">
+            <input type="checkbox" id="future" class="hideDefault" />
+            <span class="checkmark"></span>
+          </label>
         </li>
       </ul>
     </div>

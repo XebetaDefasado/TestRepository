@@ -2,10 +2,12 @@ const button = document.getElementById("button")
 const textbox = document.getElementById("textbox")
 const errorTextbox = document.getElementById("errorTextbox")
 const optionsResults = document.getElementById("optionsResults")
-const showChangedWords = document.getElementById("showChangedWords"); 
+const showChangedWords = document.getElementById("showChangedWords");
+const formatWords = document.getElementById("formatWords");
 
 button.addEventListener('click', function wordChange(){
     try{
+        optionsResults.innerHTML = null
     
         function wordReplacing(){
             if(!textbox.textContent){
@@ -52,7 +54,8 @@ button.addEventListener('click', function wordChange(){
                             patchedConjunctions[cont] = (Conjunctions[iE][jE].replace(/\s/g, '\u005F'))
                             cont = cont + 1
                             if(textbox.innerHTML.match(Conjunctions[iE][jE])){
-                                textbox.innerHTML = textbox.innerHTML.replace(Conjunctions[iE][jE], Conjunctions[iE][jE].replace(/\s/g, '\u005F'))
+                                let underlined = Conjunctions[iE][jE].replace(/\s/g, '\u005F')
+                                textbox.innerHTML = textbox.innerHTML.replace(Conjunctions[iE][jE], underlined)
                             }
                         }
                         else{
@@ -75,10 +78,19 @@ button.addEventListener('click', function wordChange(){
                 }
                 if(showChangedWords.checked){
                     for(let e of CheckingF){
+                        if(String(Object.getOwnPropertyNames(e)).match(/\u005F/) !== null){
+                            let word = String(Object.getOwnPropertyNames(e))
+                            let valueSave = String(e[word])
+                            word = word.replace(/\u005F/g, '\u0020')
+                            e = {}
+                            Object.defineProperty(e, word, {value: valueSave, writable: true})
+                        }
                         optionsResults.innerHTML += `${Object.getOwnPropertyNames(e.valueOf())}:\u0020${e.valueOf()[Object.getOwnPropertyNames(e.valueOf())]} <br>`
-                        setTimeout(() => {
-                            optionsResults.innerHTML = null
-                        }, 5000);
+                    }
+                }
+                if(formatWords.checked){
+                    if(textbox.innerHTML.match(/\u005F/) !== null){
+                        textbox.innerHTML = textbox.innerHTML.replace(/\u005F/g, '&nbsp;')
                     }
                 }
                 return
@@ -92,6 +104,7 @@ button.addEventListener('click', function wordChange(){
         errorTextbox.innerHTML = `\u274C\u2009${error.name}:<br>${error.message}` 
         setTimeout(()=>{
             errorTextbox.innerHTML = null
+            optionsResults.innerHTML = null
             textbox.contentEditable = true
         }, 2000)
     }

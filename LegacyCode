@@ -70,6 +70,8 @@ function eAditive() {
             }
             return 
         }
+
+    //calc(100vw - calc(50vw - 2px) - 200px);
 */
 
 //This crap refuse to stay as PlainText
