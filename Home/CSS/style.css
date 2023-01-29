@@ -131,8 +131,28 @@ body{
     height: 15px;
     align-items: center;
     justify-content: center;
+    transform: rotate(calc(180deg + 45deg));
+    border-radius: 50%;
+    border-bottom-right-radius: 0%;
+    border-top-left-radius: 0%;
 }
 
 .active{
     background-color: green;
+    transform: rotate(45deg);
+}
+
+#leafTry{
+    position: absolute;
+    display: block;
+    width: 17px;
+    height: 17px;
+}
+.branch { 
+    stroke: #dbc4af;
+    stroke-width: 1
+}
+
+.alive{
+    stroke: #42f56c;
 }

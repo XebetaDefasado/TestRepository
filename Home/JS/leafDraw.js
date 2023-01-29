@@ -1,6 +1,9 @@
-const canvas = document.getElementById("leaf")
-const c = canvas.getContext("2d")
+var leaf = document.getElementById("leafTry");
+var ctx = leaf.getContext("2d");
 
-c.moveTo(13/2, 0)
-c.lineTo(13/2, 13)
-c.stroke()
+ctx.strokeStyle = "#000"
+ctx.lineWidth = 15
+
+ctx.moveTo(150, 150*0.15);
+ctx.lineTo(150, 0);
+ctx.stroke();

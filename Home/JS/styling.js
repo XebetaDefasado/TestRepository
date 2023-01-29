@@ -1,12 +1,16 @@
 const checkmarks = document.getElementsByClassName('checkmark')
-
+const branches = document.getElementsByClassName('branch')
 
 for(let e of checkmarks){
     e.addEventListener('click', () => {
         e.classList.toggle('active')
+        for(let j of branches){
+            if(j.id === e.id){
+                j.classList.toggle('alive')
+            }
+        }
     })
     if(e.id === '2'){
-        let underlinedText = String()
         e.addEventListener('click', function(){
             if(textbox.textContent.match(/\u005F/)){
                 if(textbox.textContent.match(/\u005F/)){
