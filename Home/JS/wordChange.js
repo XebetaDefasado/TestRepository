@@ -1,10 +1,10 @@
 const button = document.getElementById("button")
 const textbox = document.getElementById("textbox")
 const errorTextbox = document.getElementById("errorTextbox")
-const optionsResults = document.getElementById("optionsResults")
-const showChangedWords = document.getElementById("showChangedWords");
-const formatWords = document.getElementById("formatWords");
-const underlineRemoval = document.getElementById("underlineRemoval")
+const optionsResults = document.getElementById("optR")
+//const showChangedWords = document.getElementById("showChangedWords");
+//const formatWords = document.getElementById("formatWords");
+//const underlineRemoval = document.getElementById("underlineRemoval")
 
 button.addEventListener('click', function wordChange(){
     try{
@@ -78,25 +78,6 @@ button.addEventListener('click', function wordChange(){
                     }
                     CheckingF.push(CheckingP)
                     booleanContainer.push(CheckingP)
-                }
-                if(showChangedWords.checked){
-                    for(let e of CheckingF){
-                        if(String(Object.getOwnPropertyNames(e)).match(/\u005F/) !== null){
-                            let word = String(Object.getOwnPropertyNames(e))
-                            let valueSave = String(e[word])
-                            word = word.replace(/\u005F/g, '\u0020')
-                            e = {}
-                            Object.defineProperty(e, word, {value: valueSave, writable: true})
-                        }
-                        optionsResults.innerHTML += `${Object.getOwnPropertyNames(e.valueOf())}:\u0020${e.valueOf()[Object.getOwnPropertyNames(e.valueOf())]} <br>`
-                    }
-                    if(booleanContainer){
-                        let lengthSaver = booleanContainer.length
-                        booleanContainer = booleanContainer.filter((el) => {return el[Object.getOwnPropertyNames(el)] === false})
-                        if(lengthSaver === booleanContainer.length){
-                            optionsResults.innerHTML = "Nothing changed at all."
-                        }
-                    }
                 }
                 return
             }

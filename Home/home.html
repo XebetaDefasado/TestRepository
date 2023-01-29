@@ -12,60 +12,39 @@
     <script src="JS/styling.js" defer></script>
   </head>
   <body>
-    <div id="textbox" contenteditable="true" spellcheck="false"></div>
+    <div id="textbox" contenteditable spellcheck="false"></div>
     <div id="err&Btn">
       <div id="errorTextbox" class="customBar"></div>
-      <div
-        id="optionsResults"
-        contenteditable
-        spellcheck="false"
-        class="customBar"
-      ></div>
+      <div id="optR" contenteditable spellcheck="false" class="customBar"></div>
       <button id="button"></button>
-      <ul id="optionsList">
-        <li class="no-marker">
-          <label for="showChangedWords" class="label">Show changed words</label>
-          <div class="dropdown">
-            This option let you see what words were changed during the text
-            alteration. In other words, if the word "mais" was altered to
-            another word, this will display: "mais: true" meaning that the word
-            "mais" was in fact altered.
-          </div>
-          <label class="customCheckmark">
-            <input
-              type="checkbox"
-              id="showChangedWords"
-              class="hideDefault"
-              checked
-            />
-            <span class="checkmark"></span>
-          </label>
-        </li>
-        <li class="no-marker">
-          <label for="formatWords" class="label">Format altered words</label>
-          <div class="dropdown">
-            This option let you format the altered words, replacing the
-            uppercases for lowercases. Please review the text for incorrect
-            lowercase punctuation.
-          </div>
-          <label class="customCheckmark">
-            <input type="checkbox" id="formatWords" class="hideDefault" />
-            <span class="checkmark"></span>
-          </label>
-        </li>
-        <li class="no-marker">
-          <label for="underlineRemoval" class="label">Remove underlines</label>
-          <div class="dropdown">
-            This option let you remove underlines from the text. But understand
-            that you will not be able to alter correctly without disabling this
-            option.
-          </div>
-          <label class="customCheckmark">
-            <input type="checkbox" id="underlineRemoval" class="hideDefault" />
-            <span class="checkmark"></span>
-          </label>
-        </li>
-      </ul>
+      <div class="grid">
+        <span class="item">
+          <label for="1">Show Changed Words</label>
+          <span class="customCheck">
+            <div id="1" class="checkmark active">
+              <canvas id="leaf" width="13px" height="13px"></canvas>
+            </div>
+          </span>
+        </span>
+        <span class="item">
+          <label for="2">Toggle Underlines</label>
+          <span class="customCheck">
+            <div id="2" class="checkmark"></div>
+          </span>
+        </span>
+        <span class="item">
+          <label for="3">Lowercase Words</label>
+          <span class="customCheck">
+            <div id="3" class="checkmark"></div>
+          </span>
+        </span>
+        <span class="item">
+          <label for="4">Switch Text</label>
+          <span class="customCheck">
+            <div id="4" class="checkmark"></div>
+          </span>
+        </span>
+      </div>
     </div>
   </body>
 </html>

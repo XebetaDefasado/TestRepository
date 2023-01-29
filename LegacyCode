@@ -72,6 +72,197 @@ function eAditive() {
         }
 
     //calc(100vw - calc(50vw - 2px) - 200px);
+
+
+    <ul id="optionsList">
+        <li class="no-marker">
+          <label for="showChangedWords" class="label">Show changed words</label>
+          <div class="dropdown">
+            This option let you see what words were changed during the text
+            alteration. In other words, if the word "mais" was altered to
+            another word, this will display: "mais: true" meaning that the word
+            "mais" was in fact altered.
+          </div>
+          <label class="customCheckmark">
+            <input
+              type="checkbox"
+              id="showChangedWords"
+              class="hideDefault"
+              checked
+            />
+            <span class="checkmark"></span>
+          </label>
+        </li>
+        <li class="no-marker">
+          <label for="formatWords" class="label">Format altered words</label>
+          <div class="dropdown">
+            This option let you format the altered words, replacing the
+            uppercases for lowercases. Please review the text for incorrect
+            lowercase punctuation.
+          </div>
+          <label class="customCheckmark">
+            <input type="checkbox" id="formatWords" class="hideDefault" />
+            <span class="checkmark"></span>
+          </label>
+        </li>
+        <li class="no-marker">
+          <label for="underlineRemoval" class="label">Remove underlines</label>
+          <div class="dropdown">
+            This option let you remove underlines from the text. But understand
+            that you will not be able to alter correctly without disabling this
+            option.
+          </div>
+          <label class="customCheckmark">
+            <input type="checkbox" id="underlineRemoval" class="hideDefault" />
+            <span class="checkmark"></span>
+          </label>
+        </li>
+      </ul>
+
+      if(showChangedWords.checked){
+                    for(let e of CheckingF){
+                        if(String(Object.getOwnPropertyNames(e)).match(/\u005F/) !== null){
+                            let word = String(Object.getOwnPropertyNames(e))
+                            let valueSave = String(e[word])
+                            word = word.replace(/\u005F/g, '\u0020')
+                            e = {}
+                            Object.defineProperty(e, word, {value: valueSave, writable: true})
+                        }
+                        optionsResults.innerHTML += `${Object.getOwnPropertyNames(e.valueOf())}:\u0020${e.valueOf()[Object.getOwnPropertyNames(e.valueOf())]} <br>`
+                    }
+                    if(booleanContainer){
+                        let lengthSaver = booleanContainer.length
+                        booleanContainer = booleanContainer.filter((el) => {return el[Object.getOwnPropertyNames(el)] === false})
+                        if(lengthSaver === booleanContainer.length){
+                            optionsResults.innerHTML = "Nothing changed at all."
+                        }
+                    }
+                }
+
+.textFor{
+    transition: none;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.textFor:hover{
+    color: #0000aa;
+}
+.dropdown{
+    position: fixed;
+    width: 0;
+    height: 0;
+    background-color: white;
+    display: none;
+    font-family: monospace;
+    z-index: 10;
+}
+.textFor:hover ~ .dropdown{
+    --wd: calc(200px - 2px - 10px);
+    transform: translateY(calc((10vh - 50%) - 100px));
+    width: var(--wd);
+    height: fit-content;
+    border: 1px solid black;
+    padding: 5px;
+    display: block;
+}
+
+.customCheckmark{
+    position: relative;
+    display: block;
+    cursor: pointer;
+    width: 13px;
+    height: 13px;
+    margin-left: 10px;
+}
+.hideDefault{
+    cursor: pointer;
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+.checkmark{
+    transition: none;
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.hideDefault:checked ~ .checkmark{
+    background-color: #909090;
+    box-shadow: 0px 0px 5px #909090;
+    animation-name: animate;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+.hideDefault:checked ~ .checkmark::after{
+    display: block;
+}
+.checkmark::after{
+    transition: none;
+    position: absolute;
+    content: "";
+    display: none;
+    width: 7px;
+    height: 3px;
+    border: solid black;
+    border-width: 0px 0px 2px 2px;
+    transform: rotate(-60deg);
+    bottom: 4px
+}
+@keyframes animate {
+    0%{box-shadow: 0px 0px 5px #909090;}
+    100%{box-shadow: 0px 0px 10px #000000;}
+}
+
+#optionsList{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    width: calc(100vw - calc(50vw - 2px) - 200px);
+    max-width: calc(100vw - calc(50vw - 2px) - 200px);
+    height: 30vh;
+}
+
+<div class="grid">
+        <li class="no-marker">
+          <label for="1" class="l">Show Changed Words</label>
+          <label class="customCheckmark">
+            <input id="1" type="checkbox" class="hideDefault" checked />
+            <span class="checkmark"></span>
+          </label>
+        </li>
+        <div class="dropdown 2"></div>
+        <li class="no-marker">
+          <label for="2" class="l">Remove Underlines</label>
+          <label class="customCheckmark">
+            <input id="2" type="checkbox" class="hideDefault" />
+            <span class="checkmark"></span>
+          </label>
+        </li>
+        <div class="dropdown 3"></div>
+        <li class="no-marker">
+          <label for="3" class="l">Lowercase Letters</label>
+          <label class="customCheckmark">
+            <input id="3" type="checkbox" class="hideDefault" />
+            <span class="checkmark"></span>
+          </label>
+        </li>
+        <div class="dropdown 4"></div>
+        <li class="no-marker">
+          <label for="4" class="l">Clean Textbox</label>
+          <label class="customCheckmark">
+            <input id="4" type="checkbox" class="hideDefault" />
+            <span class="checkmark"></span>
+          </label>
+        </li>
+      </div>
 */
 
 //This crap refuse to stay as PlainText
